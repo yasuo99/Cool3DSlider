@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="banner">
+        <div id="slider" class="slider" style="--quantity: 8">
+            <div id="current" class="item" style="--position: 1">
+                <img src="/images/MSI.png" alt="">
+            </div>
+            <div class="item" style="--position: 2">
+                <img src="/images/MSI_MAG.jpg" alt="">
+            </div>
+            <div class="item" style="--position: 3">
+                <img src="/images/MSI_MEG_ACE.jpg" alt="">
+            </div>
+            <div class="item" style="--position: 4">
+                <img src="/images/MSI_MEG_GODLIKE.jpg" alt="">
+            </div>
+            <div class="item" style="--position: 5">
+                <img src="/images/MSI_MPG.jpg" alt="">
+            </div>
+            <div class="item" style="--position: 6">
+                <img src="/images/MSI_PRO.jpg" alt="">
+            </div>
+            <div class="item" style="--position: 7">
+                <img src="/images/MSI_MEG_GODLIKE.jpg" alt="">
+            </div>
+            <div class="item" style="--position: 8">
+                <img src="/images/MSI_MEG_ACE.jpg" alt="">
+            </div>
+        </div>
+        <div class="navigator">
+            <button class="btn" onclick="myFunction()">previous</button>
+            <button class="btn" onclick="myFunction(true)">next</button>
+        </div>
+    </div>
+    <script>
+        var min = 1;
+        var element = document.getElementById("slider");
+        var style = getComputedStyle(element)
+        var max = Number.parseInt(style.getPropertyValue('--quantity'));
+        function myFunction(isNext = false) {
+            var currentEl = document.getElementById('current');
+            var currentStyle = getComputedStyle(currentEl)
+            var currentPos = Number.parseInt(currentStyle.getPropertyValue('--position'));
+            var elements = document.getElementsByClassName('item');
+            for (let index = 0; index < elements.length; index++) {
+                const element = elements[index];
+
+                var elStyle = getComputedStyle(element)
+                var elPos = Number.parseInt(elStyle.getPropertyValue('--position'));
+                if (isNext) {
+                    var nextPos = currentPos + 1;
+                    if(nextPos > max){
+                        nextPos = min;
+                    }
+                    if (elPos === nextPos) {
+                        element.setAttribute('id', 'current')
+                    }
+                    if (elPos == currentPos) {
+                        element.removeAttribute('id');
+                    }
+                    var tempPos = elPos - 1;
+                    if(tempPos == 0){
+                        tempPos = max;
+                    }
+                    element.style.setProperty('--position', tempPos);
+                }
+                else {
+                    var nextPos = currentPos - 1;
+                    if (currentPos == min) {
+                        nextPos = max;
+                    }
+                    if (elPos === nextPos) {
+                        element.setAttribute('id', 'current')
+                    }
+                    if (elPos == currentPos) {
+                        element.removeAttribute('id');
+                    }
+                    var tempPos = elPos + 1;
+                    if(tempPos > max){
+                        tempPos = min;
+                    }
+                    element.style.setProperty('--position', tempPos);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
